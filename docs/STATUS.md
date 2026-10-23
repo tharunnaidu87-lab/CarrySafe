@@ -1,24 +1,24 @@
 # Release status
 
-## Implemented and locally verified
+## Implemented and verified
 
 Persistent incidents, temporary controls, ownership acceptance, three-shift handover snapshots and recipient acknowledgment; deterministic continuity flags; closure requests with evidence, independent supervisor review and blocked premature closure; tenant-scoped roles, sessions, audit history, idempotency and optimistic version checks.
 
 The official MCP server exposes 19 typed tools over Streamable HTTP. An actual client negotiated protocol 2025-11-25 and completed writes, reads and rejection paths. Manual form writes and assistant shortcuts use MCP. The React/TypeScript application compiles and provides assistant, operations, incident, handover, integrity and review screens. The database contains 100 synthetic seed records when freshly initialized.
 
-Local test results: 26 backend tests and five frontend unit tests pass. See [exact verification](../TEST_REPORT.md).
+Verification results: 26 backend tests and five frontend unit tests pass locally and in GitHub Actions. The same 26 backend tests also pass against PostgreSQL. See [exact verification](../TEST_REPORT.md).
 
 ## Implemented with remaining verification
 
 Free-form assistant orchestration supports an OpenAI-compatible provider, persisted conversations and explicit write proposals, but was tested with mocked providers only. No provider credentials were supplied. Without configuration, manual MCP mode is explicit.
 
-Browser speech input/output and responsive UI are implemented, but browser inspection was blocked. Playwright coverage is prepared, not executed. Docker/PostgreSQL and a schema-validated Render Blueprint are supplied, but have not run in deployment. Native startup scripts are supplied; Windows execution remains unverified.
+Browser speech input/output and responsive UI are implemented, but browser inspection was blocked. Playwright coverage is prepared, not executed. Docker image build, PostgreSQL migrations and tests, real container MCP workflow and restart persistence passed in GitHub Actions. A schema-validated Render Blueprint is supplied; public hosting remains outstanding. Native startup scripts are supplied; Windows execution remains unverified.
 
 ## Missing before a credible complete submission
 
 1. Configure a real function-calling provider and demonstrate a multi-tool conversational task and confirmed write.
 2. Run the browser workflow, inspect desktop/mobile layouts, microphone support and keyboard interactions; fix discovered failures.
-3. If using a hosted demo, validate the Docker/PostgreSQL workflow, supply persistent database and host/origin settings, deploy and verify the public URL. Local demonstration is otherwise documented.
+3. If using a hosted demo, supply a persistent database and host/origin settings, deploy and verify the public URL. Local demonstration is otherwise documented.
 4. Record the authentic under-three-minute demo, replace the team/video placeholders and submit the final project through Devpost. Nothing has been submitted automatically.
 
 Additional production work includes staff lifecycle provisioning, account recovery/SSO, stronger distributed rate limiting, PostgreSQL contention testing, operational backups and tamper-evident audit retention. The initial operator CLI provisions only an empty organization and its first supervisor. OAuth-based external MCP distribution is not implemented. The interface and fixtures currently target the India-timezone demonstration.

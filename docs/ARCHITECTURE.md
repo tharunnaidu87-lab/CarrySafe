@@ -26,6 +26,6 @@ Handovers contain an immutable snapshot of unresolved case IDs and a designated 
 
 Active controls stay active until an authorized recorded review retires them. An independent supervisor can approve a closure request only after all controls have been retired, ownership accepted and disputes clarified. Verification references are human attestations; software does not verify a physical repair.
 
-SQLite is for local operation. PostgreSQL is the hosted target, using the same schema and migration. This release has been executed against SQLite; production-database behavior remains a validation gate.
+SQLite is for local operation. PostgreSQL is the hosted target, using the same schema and migration. This release has been executed against SQLite and PostgreSQL 17 in isolated GitHub Actions jobs. The PostgreSQL migration and all 26 backend tests passed. Load, contention and hosted operational behavior remain validation gates.
 
 Queries for incident lists, history and recent activity are bounded. Integrity and dashboard aggregation currently scan the organization's records; handover snapshots can be large. This is appropriate for the demonstration scale, not evidence of large-scale performance. Before scaling, introduce aggregate queries, paged handover membership tables, retention policies, external rate limiting and workload tests. No Kubernetes, queue system or distributed architecture is needed for the current release.

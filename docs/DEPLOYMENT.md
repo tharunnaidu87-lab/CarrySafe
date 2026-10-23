@@ -4,9 +4,9 @@
 
 Python 3.12 backend, SQLite file, built React UI served by FastAPI. Use the root README. A server restart preserves the local database. SQLite is rejected when `ENVIRONMENT=production`.
 
-## Docker Compose (prepared; runtime not verified here)
+## Docker Compose (verified in GitHub Actions)
 
-Docker was unavailable in the build environment. The multi-stage Dockerfile and Compose file are supplied, but an image build and PostgreSQL workflow must be tested before claiming deployment readiness.
+Docker was unavailable in the local build environment. The multi-stage image and Compose stack were subsequently built and run in GitHub Actions: migrations, synthetic seed, actual MCP verification and restart persistence all passed. This verifies the isolated container workflow, not a public deployment.
 
 Create a ROOT `.env` with a unique alphanumeric database password (to avoid URL escaping issues) and a separate demo password of at least 12 characters:
 

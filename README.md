@@ -18,7 +18,7 @@ Built for the **Alexa+ track of the Amazon Developer Hackathon 2026**: an Alexa+
 - Role checks, tenant isolation, Argon2 passwords, expiring hashed sessions, idempotency receipts, optimistic concurrency and audit history.
 - Browser voice input with editable transcript and optional speech output, subject to browser support.
 
-**Release limitations:** live LLM, microphone behavior, browser end-to-end execution, PostgreSQL runtime and Docker image execution remain unverified. Browser inspection was blocked by the build environment's security policy. There is no public deployment or published demo video. See [TEST_REPORT.md](TEST_REPORT.md) for exact evidence and [docs/STATUS.md](docs/STATUS.md) for remaining work.
+**Release limitations:** live LLM, microphone behavior, browser end-to-end execution and public deployment remain unverified. Browser inspection was blocked by the build environment's security policy. There is no public deployment or published demo video. See [TEST_REPORT.md](TEST_REPORT.md) for exact evidence and [docs/STATUS.md](docs/STATUS.md) for remaining work.
 
 ## Fastest local start — Windows
 

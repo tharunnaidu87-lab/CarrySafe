@@ -22,7 +22,7 @@ Temporary controls remain traceable across shifts. Each integrity flag has an ex
 
 ## Testing and limitations
 
-See TEST_REPORT.md for exact executed checks. Real HTTP MCP discovery, writes, tenant isolation, worker denial and closure rules have been tested. Agent tests use a simulated provider. Live model behavior, browser end-to-end execution, microphone behavior, Docker and PostgreSQL runtime remain validation gates. The product coordinates records and does not certify physical safety.
+See TEST_REPORT.md for exact executed checks. Real HTTP MCP discovery, writes, tenant isolation, worker denial and closure rules have been tested. Agent tests use a simulated provider. Live model behavior, browser end-to-end execution, microphone behavior and public hosting remain validation gates. Docker build/start, PostgreSQL migrations and all 26 backend tests, container MCP workflow and restart persistence passed in GitHub Actions. The product coordinates records and does not certify physical safety.
 
 ## Data and licensing
 
