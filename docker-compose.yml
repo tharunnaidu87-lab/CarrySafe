@@ -1,0 +1,30 @@
+services:
+  db:
+    image: postgres:17-bookworm
+    environment:
+      POSTGRES_DB: carrysafe
+      POSTGRES_USER: carrysafe
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in root .env}
+    volumes:
+      - carrysafe_data:/var/lib/postgresql/data
+    healthcheck:
+      test: [CMD-SHELL, 'pg_isready -U carrysafe -d carrysafe']
+      interval: 5s
+      retries: 15
+  app:
+    build: .
+    ports: ['127.0.0.1:8000:8000']
+    environment:
+      DATABASE_URL: postgresql+psycopg://carrysafe:${POSTGRES_PASSWORD}@db:5432/carrysafe
+      ENVIRONMENT: local
+      ALLOWED_HOSTS: localhost,127.0.0.1
+      ALLOWED_ORIGINS: http://localhost:8000,http://127.0.0.1:8000
+      DEMO_PASSWORD: ${DEMO_PASSWORD:?Set a unique 12+ character DEMO_PASSWORD in root .env}
+      LLM_BASE_URL: ${LLM_BASE_URL:-}
+      LLM_API_KEY: ${LLM_API_KEY:-}
+      LLM_MODEL: ${LLM_MODEL:-}
+    depends_on:
+      db:
+        condition: service_healthy
+volumes:
+  carrysafe_data:

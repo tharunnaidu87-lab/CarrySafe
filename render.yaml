@@ -1,0 +1,21 @@
+# Optional template. No resources are created by this file alone.
+# Supply an existing persistent PostgreSQL URL and exact HTTPS origin/host.
+services:
+  - type: web
+    name: carrysafe
+    runtime: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /api/health
+    autoDeployTrigger: 'off'
+    envVars:
+      - key: ENVIRONMENT
+        value: production
+      - key: DATABASE_URL
+        sync: false
+      - key: ALLOWED_HOSTS
+        sync: false
+      - key: ALLOWED_ORIGINS
+        sync: false
+      - key: TIMEZONE
+        value: Asia/Kolkata

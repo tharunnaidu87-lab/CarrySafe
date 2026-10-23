@@ -1,0 +1,14 @@
+PASS protocol: 2025-11-25 SDK 2.3.0; transport: Streamable HTTP; discovered: 19
+PASS invoked: get_directory
+PASS invoked: create_incident
+PASS invoked: add_temporary_control
+PASS invoked: get_incident
+PASS invoked: request_incident_closure
+PASS rejected: review_closure_request AUTHORIZATION
+PASS rejected: review_closure_request ACTIVE_CONTROL
+PASS invoked: record_control_review
+PASS invoked: review_closure_request
+PASS invoked: get_incident
+PASS invoked: get_incident_history
+PASS persisted final state: closed; audit events: 7
+All verification assertions passed. Synthetic verification record remains in the local database.
