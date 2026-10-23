@@ -1,4 +1,4 @@
-"""Explicit local-only synthetic fixture initialization; never erases existing data."""
+"""Explicit synthetic fixture initialization; never erases existing data."""
 
 import os
 import random
@@ -10,8 +10,15 @@ from .auth import hasher
 from .config import settings
 
 
-def seed():
-    if settings.environment not in ("local", "test"):
+def seed(*, hosted=False):
+    if hosted:
+        if (
+            os.environ.get("BOOTSTRAP_SYNTHETIC_DEMO") != "true"
+            or settings.environment != "production"
+            or not settings.database_url.startswith(("postgresql", "postgres://"))
+        ):
+            raise RuntimeError("Hosted demo bootstrap requires explicit opt-in and production PostgreSQL.")
+    elif settings.environment not in ("local", "test"):
         raise RuntimeError("Synthetic seed is restricted to local/test environments.")
     password = os.environ.get("DEMO_PASSWORD", "")
     if len(password) < 12:
@@ -108,4 +115,8 @@ def seed():
 
 
 if __name__ == "__main__":
-    seed()
+    import argparse
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--hosted", action="store_true")
+    seed(hosted=parser.parse_args().hosted)

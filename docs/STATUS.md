@@ -6,7 +6,7 @@ Persistent incidents, temporary controls, ownership acceptance, three-shift hand
 
 The official MCP server exposes 19 typed tools over Streamable HTTP. An actual client negotiated protocol 2025-11-25 and completed writes, reads and rejection paths. Manual form writes and assistant shortcuts use MCP. The React/TypeScript application compiles and provides assistant, operations, incident, handover, integrity and review screens. The database contains 100 synthetic seed records when freshly initialized.
 
-Verification results: 26 backend tests and five frontend unit tests pass locally and in GitHub Actions. The same 26 backend tests also pass against PostgreSQL. See [exact verification](../TEST_REPORT.md).
+Verification results: 29 backend tests pass locally, including three new hosted-bootstrap checks. The previous 26-test backend suite and five frontend unit tests passed in GitHub Actions, including PostgreSQL. CI for the bootstrap change is pending. See [exact verification](../TEST_REPORT.md).
 
 ## Implemented with remaining verification
 
@@ -36,4 +36,4 @@ Additional production work includes staff lifecycle provisioning, account recove
 
 ## Hosting progress
 
-A free PostgreSQL 17 database is available in Render Singapore. Web deployment is pending Render dashboard sign-in to configure the database connection. The NVIDIA key must be entered through service secret settings. No public web URL or live model result has been verified yet.
+A free PostgreSQL 17 database and free Docker web service are created in Render Singapore. The service URL is https://carrysafe.onrender.com, not yet live or verified. Dashboard sign-in is complete. Database connection, NVIDIA API key and a unique demo password must be entered in service Environment settings before deploying. The initial build was canceled while these secrets are pending. Hosted demo initialization now requires explicit opt-in and PostgreSQL, seeds only an empty database, and preserves existing accounts. No live model result has been verified yet.

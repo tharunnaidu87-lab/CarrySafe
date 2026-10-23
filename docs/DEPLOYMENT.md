@@ -24,9 +24,9 @@ docker compose exec app python -m app.seed
 
 Open http://localhost:8000. Compose binds only to local loopback. Data lives in a named PostgreSQL volume. `docker compose down` retains it. Do not use `down -v` unless you intend to remove that database.
 
-The container starts with Alembic migration and one Uvicorn process. Concurrent replicas should use a controlled migration job rather than racing startup migrations. Seed is permitted only in local/test mode and does nothing when the database already contains an organization.
+The container starts with Alembic migration and one Uvicorn process. Concurrent replicas should use a controlled migration job rather than racing startup migrations. Ordinary seed is restricted to local/test mode. Explicit hosted demo bootstrap is described below. Both paths do nothing when the database already contains an organization.
 
-## Render (database provisioned; web deployment pending)
+## Render (resources provisioned; secrets pending)
 
 `render.yaml` defines a Docker web service on the free plan, with automatic deploys off. It references no paid database and creates nothing until someone explicitly applies it. Supply an already provisioned persistent PostgreSQL connection string. The template was validated against Render's current JSON Schema; this is structural validation, not a successful deployment.
 
@@ -40,8 +40,8 @@ Required values:
 
 The Docker entrypoint uses Render's `PORT`, sets the matching internal MCP URL, runs migrations and starts the app. The frontend and backend share one origin. `/api/health` checks database connectivity.
 
-The production seed is intentionally disabled. Provision an empty migrated organization through the operator CLI; see SECURITY.md. Before any public rollout, validate staff provisioning, records, TLS, session behavior, cross-tenant restrictions, backup/restore and PostgreSQL concurrency. Configure an external rate limit if using more than one process.
+Ordinary production seeding is disabled. For this isolated synthetic demonstration only, set `BOOTSTRAP_SYNTHETIC_DEMO=true` and a unique `DEMO_PASSWORD` of at least 12 characters. Startup then seeds an empty PostgreSQL database with 100 synthetic incidents and the three demo accounts. It refuses to overwrite any existing organization and never resets passwords on restart. After successful initialization, remove both bootstrap variables. For real data, use the operator CLI instead; see SECURITY.md. Before any public rollout, validate staff provisioning, records, TLS, session behavior, cross-tenant restrictions, backup/restore and PostgreSQL concurrency. Configure an external rate limit if using more than one process.
 
-A free CarrySafe PostgreSQL 17 database was created in Singapore on 23 October 2026 and is available. Its trial expires on 22 November 2026. No paid resource was created. No verified public application URL is available yet. The Render connector does not expose its connection credentials; dashboard sign-in is needed to finish wiring the web service. Do not place the connection URL in source control.
+A free CarrySafe PostgreSQL 17 database was created in Singapore on 23 October 2026 and is available. Its trial expires on 22 November 2026. No paid resource was created. The free Docker service is created at https://carrysafe.onrender.com, but is not live or verified yet. Its initial automatic build was canceled while secrets are pending. The service is `srv-dbdi1jtg1s2s73bj1rlg`; its Environment page is https://dashboard.render.com/web/srv-dbdi1jtg1s2s73bj1rlg/env. Enter `DATABASE_URL` using the Internal Database URL from carrysafe-db, `LLM_API_KEY` using the NVIDIA key, and `DEMO_PASSWORD` using a new unique password. The host/origin and NVIDIA model/endpoint are already configured. Save and deploy the latest commit after all values are set. Do not place the connection URL in source control.
 
 The checked-in Blueprint remains an optional template; resources created directly through the connector are managed through the Dashboard/API unless explicitly imported into a Blueprint. See [NVIDIA setup](NVIDIA_SETUP.md) for the selected model configuration.

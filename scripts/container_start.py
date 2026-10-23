@@ -5,6 +5,8 @@ import sys
 port = os.environ.get("PORT", "8000")
 os.environ["MCP_URL"] = "http://127.0.0.1:" + port + "/mcp"
 subprocess.run([sys.executable, "-m", "alembic", "upgrade", "head"], check=True)
+if os.environ.get("BOOTSTRAP_SYNTHETIC_DEMO") == "true":
+    subprocess.run([sys.executable, "-m", "app.seed", "--hosted"], check=True)
 os.execv(
     sys.executable,
     [
