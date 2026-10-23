@@ -1,7 +1,20 @@
+# Database selection must happen before importing application modules.
+# ruff: noqa: E402
 import os
 import tempfile
+from urllib.parse import urlparse
 
-os.environ["DATABASE_URL"] = "sqlite:///" + tempfile.mktemp(suffix=".db")
+test_url = os.environ.get("CARRYSAFE_TEST_DATABASE_URL")
+if test_url:
+    parsed = urlparse(test_url)
+    if (
+        parsed.scheme not in ("postgresql", "postgresql+psycopg")
+        or parsed.hostname not in ("localhost", "127.0.0.1")
+        or not parsed.path.startswith("/carrysafe_test")
+    ):
+        raise RuntimeError("Tests require a disposable local carrysafe_test database.")
+os.environ["DATABASE_URL"] = test_url or "sqlite:///" + tempfile.mktemp(suffix=".db")
+os.environ["ENVIRONMENT"] = "test"
 import pytest
 from app.db import Base, engine, Session
 from app.models import Organization, User, Location, Shift

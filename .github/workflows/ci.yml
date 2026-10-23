@@ -27,3 +27,59 @@ jobs:
         working-directory: frontend
       - run: npm run build && npm test
         working-directory: frontend
+  postgres:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:17-bookworm
+        env:
+          POSTGRES_DB: carrysafe_test
+          POSTGRES_USER: carrysafe_test
+          POSTGRES_PASSWORD: isolated-ci-database-only
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd "pg_isready -U carrysafe_test -d carrysafe_test"
+          --health-interval 5s --health-timeout 5s --health-retries 15
+    env:
+      CARRYSAFE_TEST_DATABASE_URL: postgresql+psycopg://carrysafe_test:isolated-ci-database-only@127.0.0.1:5432/carrysafe_test
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -r backend/requirements.lock
+      - name: Verify PostgreSQL migration
+        working-directory: backend
+        run: |
+          export DATABASE_URL="$CARRYSAFE_TEST_DATABASE_URL"
+          alembic upgrade head
+          alembic check
+      - run: pytest -q
+        working-directory: backend
+  docker:
+    runs-on: ubuntu-latest
+    env:
+      POSTGRES_PASSWORD: isolated-ci-compose-only
+      DEMO_PASSWORD: Isolated-CI-Demo-Only-42!
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -r backend/requirements.lock
+      - name: Build and start container with PostgreSQL
+        run: docker compose up --build --wait --wait-timeout 180
+      - run: docker compose exec -T app python -m app.seed
+      - name: Exercise real MCP workflow against container
+        run: python scripts/verify_mcp.py
+      - name: Check restart persistence
+        run: |
+          docker compose restart app
+          docker compose up --wait --wait-timeout 120
+          docker compose exec -T db psql -U carrysafe -d carrysafe -v ON_ERROR_STOP=1 -c "SELECT 1 / CASE WHEN COUNT(*) = 101 THEN 1 ELSE 0 END AS persisted FROM incidents;"
+      - name: Container logs
+        if: failure()
+        run: docker compose logs --tail 150
+      - name: Remove isolated CI resources
+        if: always()
+        run: docker compose down -v
