@@ -1,10 +1,10 @@
 # Executed verification
 
-Build-environment results from 23 October 2026. Local checks and GitHub Actions results are identified separately below. No public cloud deployment is claimed.
+Build-environment results from 23 October 2026. Local checks and GitHub Actions results are identified separately below. Public hosting checks are recorded in the follow-up below.
 
 | Check | Result |
 |---|---|
-| `cd backend && ../.venv/bin/python -m pytest -q` | 26 passed, 0 failed, 0 skipped; final run 11.79 s |
+| `cd backend && ../.venv/bin/python -m pytest -q` | 29 passed, 0 failed, 0 skipped; latest run 9.42 s |
 | `cd backend && ../.venv/bin/ruff check .` | Passed |
 | `cd frontend && npm test` | 5 passed, 0 failed, 0 skipped |
 | `cd frontend && npm run build` | TypeScript and production Vite build passed |
@@ -51,4 +51,13 @@ Frontend unit tests check request/error handling and form value conversion. They
 
 Browser end-to-end and visual checks were blocked by the environment's browser URL security policy. The prepared Playwright scenario was **not run**; it is not counted as a passed or skipped test above. Voice input, speech output, mobile layout and keyboard accessibility still require browser validation.
 
-Live LLM calls require real provider credentials and a verified model identifier. PostgreSQL load/contention behavior, cloud deployment, load testing, backup recovery under failure and Windows/macOS execution were not verified. There is no public deployment URL, video or completed Devpost submission. Automated tests passing does not certify workplace safety or production readiness.
+Live LLM calls require real provider credentials and a verified model identifier. PostgreSQL load/contention behavior, authenticated hosted workflows, load testing, backup recovery under failure and Windows/macOS execution were not verified. No demo video or Devpost submission is complete. Automated tests passing does not certify workplace safety or production readiness.
+
+## Hosted deployment follow-up — 23 October 2026
+
+- [GitHub Actions run 39928359754](https://github.com/tharunnaidu87-lab/CarrySafe/actions/runs/39928359754) completed successfully for commit `3e51f5d4d78b50c81e3c106e0801bd3abdfed212`.
+- Render deploy `dep-dbdi6mt9fdbs73b7lo40` is live at https://carrysafe.onrender.com.
+- `GET /api/health` returned HTTP 200, `status=ok`, `database=connected`.
+- Startup logs confirm 100 synthetic incidents, three accounts and two pending handovers.
+- The public Chrome login page was inspected. Login, authenticated workflows and live NVIDIA responses still await user sign-in.
+- Direct SQL verification through the connector was unavailable because external database access is blocked. No network rules were changed.
