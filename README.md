@@ -126,7 +126,7 @@ The browser test skips when `DEMO_PASSWORD` is absent. Do not treat that skip as
 
 ## Demo and deployment
 
-Start with [docs/DEMO_GUIDE.md](docs/DEMO_GUIDE.md) for the click sequence and under-three-minute narration. Reset instructions are included there. [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) covers Docker Compose and the optional Render configuration using persistent PostgreSQL. No cloud resources have been created.
+Start with [docs/DEMO_GUIDE.md](docs/DEMO_GUIDE.md) for the click sequence and under-three-minute narration. Reset instructions are included there. [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) covers Docker Compose and the optional Render configuration using persistent PostgreSQL. A free CarrySafe PostgreSQL database has been created in Render Singapore; the web service connection is pending dashboard sign-in.
 
 Documentation: [Architecture](docs/ARCHITECTURE.md) · [Security](docs/SECURITY.md) · [MCP](docs/MCP.md) · [API](docs/API.md) · [Data sources](docs/DATA_SOURCES.md) · [Submission draft](docs/DEVPOST_SUBMISSION.md) · [Product feedback](docs/PRODUCT_FEEDBACK.md) · [Friction log](docs/FRICTION_LOG.md)
 

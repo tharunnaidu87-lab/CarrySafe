@@ -10,7 +10,7 @@ Verification results: 26 backend tests and five frontend unit tests pass locally
 
 ## Implemented with remaining verification
 
-Free-form assistant orchestration supports an OpenAI-compatible provider, persisted conversations and explicit write proposals, but was tested with mocked providers only. No provider credentials were supplied. Without configuration, manual MCP mode is explicit.
+Free-form assistant orchestration supports an OpenAI-compatible provider, persisted conversations and explicit write proposals, but was tested with mocked providers only. NVIDIA has been selected, and the current endpoint/model configuration is documented in [NVIDIA setup](NVIDIA_SETUP.md). No provider credentials were supplied. Without configuration, manual MCP mode is explicit.
 
 Browser speech input/output and responsive UI are implemented, but browser inspection was blocked. Playwright coverage is prepared, not executed. Docker image build, PostgreSQL migrations and tests, real container MCP workflow and restart persistence passed in GitHub Actions. A schema-validated Render Blueprint is supplied; public hosting remains outstanding. Native startup scripts are supplied; Windows execution remains unverified.
 
@@ -33,3 +33,7 @@ Additional production work includes staff lifecycle provisioning, account recove
 - Submission text and manual checklist: [submission draft](DEVPOST_SUBMISSION.md)
 - Dataset boundaries and license inventory: [data sources](DATA_SOURCES.md), [third-party notices](../THIRD_PARTY_NOTICES.md)
 - Actual observations: [product feedback](PRODUCT_FEEDBACK.md), [friction log](FRICTION_LOG.md)
+
+## Hosting progress
+
+A free PostgreSQL 17 database is available in Render Singapore. Web deployment is pending Render dashboard sign-in to configure the database connection. The NVIDIA key must be entered through service secret settings. No public web URL or live model result has been verified yet.
